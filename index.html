@@ -1,0 +1,31 @@
+<html>
+	<head>
+		<script type='text/javascript' src="https://www.google.com/jsapi"></script>
+		<script type='text/javascript'>
+			google.load('visualization', 1.0);
+			google.setOnLoadCallback(test);
+
+			function test() {
+				var opts = {sendMethod: 'auto'};
+				var query = new google.visualization.Query('https://docs.google.com/a/wethersfield.me/spreadsheets/d/1c5Tvi0hvSbrYQhZGgQN9nJAsdQZtM7R-dnVS4gVuuTM/edit#gid=801796888', opts);
+				query.setQuery('select * where A = 6512');
+				query.send(handleQueryResponse);
+			}
+
+			function handleQueryResponse(response){
+				if(response.isError()){
+					console.log('Error: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+					return;
+				}
+
+				var data = response.getDataTable();
+				for(var i = 0; i < data.getNumberOfColumns(); i++){
+					console.log(data.getDistinctValues(i));
+				}
+				console.log(data.getNumberOfRows());
+
+			}
+		</script>
+	</head>
+
+</html>
